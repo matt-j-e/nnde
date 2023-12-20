@@ -1,8 +1,9 @@
 const Node = require('./node')
 
 class Bst {
-  constructor() {
+  constructor(cmp) {
     this.root = null
+    this.compare = cmp || ((a, b) => a < b ? -1 : 1)
   }
 
   insert(key, value) {
@@ -16,13 +17,14 @@ class Bst {
 
   _insert(current, key, value) {
     if (current) {
-      if (key < current.key) {
+      const comparison = this.compare(key, current.key)
+      if (comparison < 0) {
         if (current.left) {
           this._insert(current.left, key, value)
         } else {
           current.left = new Node(key, value)
         }
-      } else if (key > current.key) {
+      } else if (comparison > 0) {
         if (current.right) {
           this._insert(current.right, key, value)
         } else {
@@ -39,9 +41,10 @@ class Bst {
 
   _search(current, key) {
     if (current) {
+      const comparison = this.compare(key, current.key)
       if (key === current.key) {
         return current.value
-      } else if (key < current.key) {
+      } else if (comparison < 0) {
         return this._search(current.left, key)
       } else {
         return this._search(current.right, key)
@@ -50,7 +53,7 @@ class Bst {
     return false
   }
 
-  // below methods exist for debgging purposes only
+  // below methods exist for debugging purposes only
   printTree() {
     const str = this.preOrderPrint(this.root, '')
     return str.substring(0, str.length - 3)
