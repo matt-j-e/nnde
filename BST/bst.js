@@ -7,7 +7,10 @@ class Bst {
   }
 
   insert(key, value) {
-    this.root = this._insert(this.root, key, value)
+    const inserted = this._insert(this.root, key, value)
+    // this.root = this._insert(this.root, key, value)
+    this.root = inserted
+    if (inserted) return `Inserted ${key}`
   }
 
   search(key) {
@@ -49,21 +52,6 @@ class Bst {
       }
     }
     return false
-  }
-
-  // below methods exist for debugging purposes only
-  printTree() {
-    const str = this.preOrderPrint(this.root, '')
-    return str.substring(0, str.length - 3)
-  }
-
-  preOrderPrint(start, traversal) {
-    if (start) {
-      traversal += String(`${start.key}:${start.value}`) + ' | '
-      traversal = this.preOrderPrint(start.left, traversal)
-      traversal = this.preOrderPrint(start.right, traversal)
-    }
-    return traversal
   }
 }
 

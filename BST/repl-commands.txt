@@ -1,7 +1,0 @@
-const Bst = require('./bst')
-const bst = new Bst()
-bst.insert('matt',123)
-bst.insert('rob',234)
-bst.insert('kirstie',345)
-bst.insert('james',456)
-bst.insert('rob',567)
