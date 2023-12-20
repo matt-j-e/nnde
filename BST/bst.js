@@ -17,6 +17,7 @@ class Bst {
 
   _insert(current, key, value) {
     if (current) {
+      if (key === current.key) throw new ReferenceError('Key already exists')
       const comparison = this.compare(key, current.key)
       if (comparison < 0) {
         if (current.left) {
@@ -24,14 +25,12 @@ class Bst {
         } else {
           current.left = new Node(key, value)
         }
-      } else if (comparison > 0) {
+      } else {
         if (current.right) {
           this._insert(current.right, key, value)
         } else {
           current.right = new Node(key, value)
         }
-      } else {
-        throw new ReferenceError('Key already exists')
       }
     } else {
       current = new Node(key, value)
@@ -41,10 +40,9 @@ class Bst {
 
   _search(current, key) {
     if (current) {
+      if (key === current.key) return current.value
       const comparison = this.compare(key, current.key)
-      if (key === current.key) {
-        return current.value
-      } else if (comparison < 0) {
+      if (comparison < 0) {
         return this._search(current.left, key)
       } else {
         return this._search(current.right, key)
